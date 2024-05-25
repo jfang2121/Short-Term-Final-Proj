@@ -1,0 +1,31 @@
+.custom-marker {
+    position: relative;
+    background-color: blue;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.custom-marker::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -5px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid blue;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+.marker-number {
+    position: relative;
+    top: -5px;
+}

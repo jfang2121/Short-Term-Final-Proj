@@ -1,0 +1,14 @@
+/* Ensure the app-container takes the full viewport size */
+html,
+body,
+#root,
+.app-container {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+}
