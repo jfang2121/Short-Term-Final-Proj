@@ -10,6 +10,7 @@ interface Place {
   phone: string;
   website: string;
   imageUrl: string;
+  reviews?: string[];
 }
 
 const initialPlaces: Place[] = [
@@ -21,6 +22,7 @@ const initialPlaces: Place[] = [
     website: "https://clinica-esperanza-hope-clinic.business.site/",
     imageUrl:
       "https://lh3.googleusercontent.com/d/1A5ZnUqnTW5Ht740cCuOKJpkCGXG5CW3J",
+    reviews: ["Great clinic!", "Very helpful staff."],
   },
   {
     name: "Hasbro Children's Hospital",
@@ -30,6 +32,7 @@ const initialPlaces: Place[] = [
     website: "https://www.lifespan.org/locations/hasbro-childrens-hospital",
     imageUrl:
       "https://lh3.googleusercontent.com/d/1AC8CdGALEVBJRVf5xmUIUhnjUmVs730f",
+    reviews: ["Excellent care for children."],
   },
   {
     name: "Butler Hospital",
@@ -39,6 +42,7 @@ const initialPlaces: Place[] = [
     website: "https://www.butler.org/",
     imageUrl:
       "https://lh3.googleusercontent.com/d/1j6uM6Se_jxGW8__7CaCRNrlDafrOpVbs",
+    reviews: ["Good psychiatric services."],
   },
   {
     name: "Providence Community Health Center Prairie Avenue",
@@ -49,6 +53,7 @@ const initialPlaces: Place[] = [
       "https://www.providencechc.org/locations/4-locations/pchc-prairie-avenue",
     imageUrl:
       "https://lh3.googleusercontent.com/d/1ZNJwr-XSjlifEeSKI_mCwoK4TjCbxEfe",
+    reviews: ["Friendly staff."],
   },
   {
     name: "Providence Community Health Center Olneyville",
@@ -58,6 +63,7 @@ const initialPlaces: Place[] = [
     website: "https://www.providencechc.org/locations/pchc-olneyville",
     imageUrl:
       "https://lh3.googleusercontent.com/d/1Suw-hvwztsjvz0ngK8J5WahzI2syG6ig",
+    reviews: ["Convenient location."],
   },
   {
     name: "Providence Community Health Center Crossroads",
@@ -67,6 +73,7 @@ const initialPlaces: Place[] = [
     website: "https://www.providencechc.org/locations/pchc-crossroads",
     imageUrl:
       "https://lh3.googleusercontent.com/d/1UIK6qbhESZy9xe6hNpMDed24qdvwoLUP",
+    reviews: ["Great services."],
   },
   {
     name: "Another Clinic",
@@ -76,6 +83,7 @@ const initialPlaces: Place[] = [
     website: "http://example2.com",
     imageUrl:
       "https://lh3.googleusercontent.com/d/1_trvcS18dK3uOlr5_juPodZuiAX9vjtG",
+    reviews: ["Helpful staff."],
   },
 ];
 
@@ -159,6 +167,7 @@ const Map: FC = () => {
                 phone: newPlace.phone || place.phone,
                 website: newPlace.website || place.website,
                 imageUrl: newPlace.imageUrl || place.imageUrl,
+                reviews: place.reviews,
               }
             : place
         )
@@ -174,6 +183,7 @@ const Map: FC = () => {
           phone: newPlace.phone || "No Phone Number Provided",
           website: newPlace.website || "No Website Provided",
           imageUrl: newPlace.imageUrl || "https://via.placeholder.com/150",
+          reviews: [],
         },
       ]);
     }
@@ -221,31 +231,49 @@ const Map: FC = () => {
             }`}
             onClick={() => handleSidebarClick(place, idx)}
           >
-            <h2 className="font-bold text-lg mb-2">{place.name}</h2>
-            <img
-              src={place.imageUrl}
-              alt={place.name}
-              className="w-full h-48 object-contain mb-2 rounded"
-            />
-            <p>{place.address}</p>
-            <p>{place.phone}</p>
-            <a
-              href={place.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline"
-            >
-              {place.website}
-            </a>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEditClick(idx);
-              }}
-              className="mt-2 text-blue-500 underline w-full text-left"
-            >
-              Edit
-            </button>
+            <div className="flex space-x-4 overflow-x-scroll">
+              <div className="flex-shrink-0 w-full">
+                <h2 className="font-bold text-lg mb-2">{place.name}</h2>
+                <img
+                  src={place.imageUrl}
+                  alt={place.name}
+                  className="w-full h-48 object-contain mb-2 rounded"
+                />
+                <p>{place.address}</p>
+                <p>{place.phone}</p>
+                <a
+                  href={place.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  {place.website}
+                </a>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEditClick(idx);
+                  }}
+                  className="mt-2 text-gray-500 underline w-full text-left"
+                >
+                  Edit
+                </button>
+              </div>
+              <div className="flex-shrink-0 w-full">
+                <h2 className="font-bold text-lg mb-2">Reviews</h2>
+                {place.reviews && place.reviews.length > 0 ? (
+                  <ul className="list-disc list-inside">
+                    {place.reviews.map((review, idx) => (
+                      <li key={idx} className="mb-2">
+                        {review}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No reviews now.</p>
+                )}
+              </div>
+            </div>
           </div>
         ))}
         <form onSubmit={handleFormSubmit} className="p-4 border rounded mt-4">
